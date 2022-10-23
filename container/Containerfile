@@ -1,21 +1,17 @@
 FROM ghdl/ghdl:ubuntu20-llvm-10
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
-RUN apt-get install -y yosys npm gtkwave scrot xvfb python3-pyvirtualdisplay python3-pip
-RUN pip3 install --upgrade setuptools wheel # ubuntu 18.04 apparently doesnt have proper setuptools
-RUN pip3 install pillow pyscreenshot path
-RUN npm install -g netlistsvg
-
-RUN apt-get install -y git tcl-dev pkg-config clang libreadline-dev bison flex
-RUN apt-get remove -y --purge yosys*
-
-RUN mkdir /yosys_source
-
-RUN cd /yosys_source && git clone https://github.com/YosysHQ/yosys.git && cd yosys && make -j$(nproc) && make install
-RUN cd /yosys_source && git clone https://github.com/ghdl/ghdl-yosys-plugin.git && cd ghdl-yosys-plugin && make -j$(nproc) && make install
-
-RUN mkdir /tools
+RUN apt-get update && \
+    apt-get install -y yosys npm gtkwave scrot xvfb python3-pyvirtualdisplay python3-pip && \
+    pip3 install --upgrade setuptools wheel # ubuntu 18.04 apparently doesnt have proper setuptools && \
+    pip3 install pillow pyscreenshot path && \
+    npm install -g netlistsvg && \
+    apt-get install -y git tcl-dev pkg-config clang libreadline-dev bison flex && \
+    apt-get remove -y --purge yosys* && \
+    mkdir /yosys_source && \
+    cd /yosys_source && git clone https://github.com/YosysHQ/yosys.git && cd yosys && make -j$(nproc) && make install && \
+    cd /yosys_source && git clone https://github.com/ghdl/ghdl-yosys-plugin.git && cd ghdl-yosys-plugin && make -j$(nproc) && make install && \
+    mkdir /tools
 
 COPY vcd2png.py /tools/
 COPY vhd2svg.sh /tools/
