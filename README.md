@@ -30,6 +30,7 @@ Script for generating .png/.svg RTL diagrams from .hdl / .v files.
 * https://davidthings.github.io/hdelk/
 
 
+
 The instructions in https://blog.eowyn.net/improving_netlistsvg/ 
 ```
 TOP=top
